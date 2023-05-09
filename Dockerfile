@@ -1,4 +1,4 @@
-# Smallest base image
+# 使用的镜像
 FROM alpine:latest
 
 LABEL maintainer="Li qinghai <61864003@qq.com>"
@@ -9,7 +9,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/reposi
     ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
 
-# Needed by scripts
+# 需要的脚本
 ENV OPENVPN=/etc/openvpn
 ENV EASYRSA=/usr/share/easy-rsa \
     EASYRSA_CRL_DAYS=3650 \
@@ -17,7 +17,7 @@ ENV EASYRSA=/usr/share/easy-rsa \
 
 VOLUME ["/etc/openvpn"]
 
-# Internally uses port 1194/udp, remap using `docker run -p 443:1194/tcp`
+# 内部使用的端口是1194/udp,可以使用`docker run -p 443:1194/tcp`重新映射
 EXPOSE 1194/udp
 
 CMD ["ovpn_run"]
@@ -25,5 +25,6 @@ CMD ["ovpn_run"]
 ADD ./bin /usr/local/bin
 RUN chmod a+x /usr/local/bin/*
 
+# 使用PAM模块，添加对otp身份验证的支持
 # Add support for OTP authentication using a PAM module
 ADD ./otp/openvpn /etc/pam.d/
