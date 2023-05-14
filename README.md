@@ -54,7 +54,7 @@ version: '2'
 services:
    openvpn:
      container_name: openvpn
-     image: docker-openvpn:v1
+     image: vip8/openvpn
      environment:
        TZ: Asia/Shanghai
      volumes:
