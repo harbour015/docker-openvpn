@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+   openvpn:
+     container_name: openvpn
+     image: docker-openvpn:v1
+     environment:
+       TZ: Asia/Shanghai
+     volumes:
+      - "./data:/etc/openvpn"
+     ports:
+      - '28039:1194/udp'
+     cap_add:
+      - NET_ADMIN
+     restart: always
+     privileged: true
