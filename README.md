@@ -48,7 +48,7 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 ### 准备docker-compose文件
 
 ```shell
-cd /opt/
+cd /opt/openvpn
 cat docker-compose.yaml
 version: '2'
 services:
