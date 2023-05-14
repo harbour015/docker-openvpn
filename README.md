@@ -43,6 +43,83 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 
       docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
 
+## docker-compose安装
+
+### 准备docker-compose文件
+
+```shell
+cd /opt/
+cat docker-compose.yaml
+version: '2'
+services:
+   openvpn:
+     container_name: openvpn
+     image: docker-openvpn:v1
+     environment:
+       TZ: Asia/Shanghai
+     volumes:
+      - "./data:/etc/openvpn"
+     ports:
+      - '28039:1194/udp'
+     cap_add:
+      - NET_ADMIN
+     restart: always
+     privileged: true
+```
+
+### 生成配置文件
+
+```shell
+docker-compose run --rm openvpn ovpn_genconfig -u udp://1.12.18.89
+# 1.12.18.89为公网的ip地址
+```
+
+### 生成密钥文件
+
+```shell
+docker-compose run --rm openvpn ovpn_initpki
+```
+
+### 生成客户端配置文件
+
+```shell
+docker-compose run --rm openvpn easyrsa build-client-full client_name nopass
+# nopass 添加此参数表示客户端证书不使用密码保护
+```
+
+### 导出客户端证书
+
+```shell
+docker-compose run --rm openvpn ovpn_getclient client_name > ./client/client_name.ovpn
+# 默认情况下，没有client文件夹，需要手动创建
+```
+
+添加用户脚本
+
+```shell
+#!/bin/bash
+if [ $# -ne 1 ];then
+	echo "usage : $0  username"
+	exit
+fi
+#'OGzgI45=yursB#2D+M3fRb%8Q4rh6+'
+pass=`tr -dc '_A-Z#\-+=a-z(0-9%^)]{' </dev/urandom | head -c 15`
+capass='KRXtlZNxXpuOvQ'
+docker-compose run --rm  openvpn easyrsa build-client-full $1 nopass
+#docker-compose run --rm  openvpn easyrsa build-client-full $1
+docker-compose run --rm openvpn ovpn_getclient $1 > ./client/$1.ovpn
+sed -i 's/1194/28039/g' ./client/$1.ovpn
+
+# 不添加默认路由，指定ip段使用vpn转发
+sed -i 's@redirect-gateway def1@#redirect-gateway def1@g' ./client/$1.ovpn
+sed -i '8i\route 192.168.0.0  255.255.224.0  vpn_gateway'  ./client/$1.ovpn
+sed -i '8i\route 1.1.0.0  255.255.224.0  vpn_gateway'  ./client/$1.ovpn
+```
+
+
+
+
+
 ## Next Steps
 
 ### More Reading
