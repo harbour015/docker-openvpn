@@ -1,13 +1,12 @@
 # OpenVPN for Docker
 
-[![Build Status](https://travis-ci.org/kylemanna/docker-openvpn.svg)](https://travis-ci.org/kylemanna/docker-openvpn)
-[![Docker Stars](https://img.shields.io/docker/stars/kylemanna/openvpn.svg)](https://hub.docker.com/r/kylemanna/openvpn/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/kylemanna/openvpn.svg)](https://hub.docker.com/r/kylemanna/openvpn/)
+[![Build Status](images/openvpn-github-Readme/docker-openvpn.svg)](https://travis-ci.org/kylemanna/docker-openvpn)
+[![Docker Stars](images/openvpn-github-Readme/openvpn.svg+xml)](https://hub.docker.com/r/kylemanna/openvpn/)
+[![Docker Pulls](images/openvpn-github-Readme/openvpn-1684038252898-1.svg+xml)](https://hub.docker.com/r/kylemanna/openvpn/)
 [![ImageLayers](https://images.microbadger.com/badges/image/kylemanna/openvpn.svg)](https://microbadger.com/#/images/kylemanna/openvpn)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkylemanna%2Fdocker-openvpn.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkylemanna%2Fdocker-openvpn?ref=badge_shield)
+[![FOSSA Status](images/openvpn-github-Readme/git%2Bgithub.com%2Fkylemanna%2Fdocker-openvpn.svg+xml)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkylemanna%2Fdocker-openvpn?ref=badge_shield)
 
-
-OpenVPN server in a Docker container complete with an EasyRSA PKI CA.
+Docker容器中的OpenVPN服务器，并配有EasyRSA PKI CA。
 
 Extensively tested on [Digital Ocean $5/mo node](http://bit.ly/1C7cKr3) and has
 a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
@@ -19,30 +18,28 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 
 ## Quick Start
 
-* Pick a name for the `$OVPN_DATA` data volume container. It's recommended to
-  use the `ovpn-data-` prefix to operate seamlessly with the reference systemd
-  service.  Users are encourage to replace `example` with a descriptive name of
-  their choosing.
+* 定义`$OVPN_DATA`变量为数据卷容器名称。建议使用`ovpn-data-`前缀。
 
       OVPN_DATA="ovpn-data-example"
 
-* Initialize the `$OVPN_DATA` container that will hold the configuration files
-  and certificates.  The container will prompt for a passphrase to protect the
-  private key used by the newly generated certificate authority.
+* 初始化将保存配置文件的`$OVPN_DATA`容器和证书。容器将提示输入密码短语来保护新生成的证书颁发机构使用的私钥。
 
       docker volume create --name $OVPN_DATA
       docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM
       docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
 
-* Start OpenVPN server process
+* 启动OpenVPN服务进程
 
-      docker run -v $OVPN_DATA:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn
+      docker run -v $OVPN_DATA:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN vip8/openvpn
 
-* Generate a client certificate without a passphrase
+* 生成不带密码的客户端证书
 
-      docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full CLIENTNAME nopass
+  ```shell
+  docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full CLIENTNAME nopass
+  # nopass 去掉这个参数，生成时提示输入密码
+  ```
 
-* Retrieve the client configuration with embedded certificates
+* 生成客户端证书和配置文件
 
       docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
 
@@ -69,7 +66,7 @@ If you prefer to use `docker-compose` please refer to the [documentation](docs/d
 
 * Create an environment variable with the name DEBUG and value of 1 to enable debug output (using "docker -e").
 
-        docker run -v $OVPN_DATA:/etc/openvpn -p 1194:1194/udp --cap-add=NET_ADMIN -e DEBUG=1 kylemanna/openvpn
+        docker run -v $OVPN_DATA:/etc/openvpn -p 1194:1194/udp --cap-add=NET_ADMIN -e DEBUG=1 vip8/openvpn
 
 * Test using a client that has openvpn installed correctly
 
@@ -207,4 +204,4 @@ of a guarantee in the future.
 
 
 ## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkylemanna%2Fdocker-openvpn.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkylemanna%2Fdocker-openvpn?ref=badge_large)
+[![FOSSA Status](images/openvpn-github-Readme/git%2Bgithub.com%2Fkylemanna%2Fdocker-openvpn-1684038252898-3.svg+xml)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkylemanna%2Fdocker-openvpn?ref=badge_large)
