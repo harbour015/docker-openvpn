@@ -66,6 +66,8 @@ services:
      restart: always
      privileged: true
 ```
+>生成了docker-compose文件，先不启动
+
 
 ### 生成配置文件
 
@@ -73,7 +75,7 @@ services:
 docker-compose run --rm openvpn ovpn_genconfig -u udp://1.12.18.89
 # 1.12.18.89为公网的ip地址
 ```
->生成了配置文件，先不启动
+
 
 ### 生成密钥文件
 
