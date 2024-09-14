@@ -36,7 +36,7 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 
 
       docker run -v $OVPN_DATA:/etc/openvpn --rm -it vip8/openvpn easyrsa build-client-full CLIENTNAME nopass
-      > nopass 去掉这个参数，生成时提示输入密码
+      `# nopass 去掉这个参数，生成时提示输入密码`
 
 
 * 生成客户端证书和配置文件
