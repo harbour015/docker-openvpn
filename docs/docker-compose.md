@@ -3,18 +3,20 @@
 * Add a new service in docker-compose.yml
 
 ```yaml
-version: '2'
 services:
-  openvpn:
-    cap_add:
-     - NET_ADMIN
-    image: kylemanna/openvpn
-    container_name: openvpn
-    ports:
-     - "1194:1194/udp"
-    restart: always
-    volumes:
-     - ./openvpn-data/conf:/etc/openvpn
+   openvpn:
+     container_name: openvpn
+     image: vip8/openvpn
+     environment:
+       TZ: Asia/Shanghai
+     volumes:
+      - "./data:/etc/openvpn"
+     ports:
+      - '28039:1194/udp'
+     cap_add:
+      - NET_ADMIN
+     restart: always
+     privileged: true
 ```
 
 
