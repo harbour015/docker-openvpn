@@ -73,6 +73,7 @@ services:
 docker-compose run --rm openvpn ovpn_genconfig -u udp://1.12.18.89
 # 1.12.18.89为公网的ip地址
 ```
+>生成了配置文件，先不启动
 
 ### 生成密钥文件
 
@@ -115,7 +116,10 @@ sed -i 's@redirect-gateway def1@#redirect-gateway def1@g' ./client/$1.ovpn
 sed -i '8i\route 192.168.0.0  255.255.224.0  vpn_gateway'  ./client/$1.ovpn
 sed -i '8i\route 1.1.0.0  255.255.224.0  vpn_gateway'  ./client/$1.ovpn
 ```
-
+启动
+```shell
+docker-compose up -d
+```
 
 
 
