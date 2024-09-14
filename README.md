@@ -25,8 +25,8 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 * 初始化将保存配置文件的`$OVPN_DATA`容器和证书。容器将提示输入密码短语来保护新生成的证书颁发机构使用的私钥。
 
       docker volume create --name $OVPN_DATA
-      docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM
-      docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
+      docker run -v $OVPN_DATA:/etc/openvpn --rm vip8/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM
+      docker run -v $OVPN_DATA:/etc/openvpn --rm -it vip8/openvpn ovpn_initpki
 
 * 启动OpenVPN服务进程
 
@@ -35,13 +35,13 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 * 生成不带密码的客户端证书
 
   ```shell
-  docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full CLIENTNAME nopass
+  docker run -v $OVPN_DATA:/etc/openvpn --rm -it vip8/openvpn easyrsa build-client-full CLIENTNAME nopass
   # nopass 去掉这个参数，生成时提示输入密码
   ```
 
 * 生成客户端证书和配置文件
 
-      docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
+      docker run -v $OVPN_DATA:/etc/openvpn --rm vip8/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
 
 ## docker-compose安装
 
