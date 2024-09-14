@@ -12,7 +12,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/reposi
 # 需要的脚本
 ENV OPENVPN=/etc/openvpn
 ENV EASYRSA=/usr/share/easy-rsa \
-    EASYRSA_CRL_DAYS=3650 \
+    EASYRSA_CRL_DAYS=36500 \
     EASYRSA_PKI=$OPENVPN/pki
 
 VOLUME ["/etc/openvpn"]
