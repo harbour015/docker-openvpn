@@ -13,8 +13,8 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 
 #### Upstream Links
 
-* Docker Registry @ [kylemanna/openvpn](https://hub.docker.com/r/kylemanna/openvpn/)
-* GitHub @ [kylemanna/docker-openvpn](https://github.com/kylemanna/docker-openvpn)
+* Docker Registry @ [kylemanna/openvpn](https://hub.docker.com/r/vip8/openvpn)
+* GitHub @ [kylemanna/docker-openvpn](https://github.com/vip8/docker-openvpn)
 
 ## Quick Start
 
@@ -50,7 +50,6 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 ```shell
 cd /opt/openvpn
 cat docker-compose.yaml
-version: '2'
 services:
    openvpn:
      container_name: openvpn
