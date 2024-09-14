@@ -79,7 +79,8 @@ docker-compose run --rm openvpn ovpn_genconfig -u udp://1.12.18.89
 ### 生成密钥文件
 
 ```shell
-docker-compose run --rm openvpn ovpn_initpki
+docker-compose run -e  EASYRSA_CRL_DAYS=3650 --rm openvpn ovpn_initpki
+# EASYRSA_CRL_DAYS=3650 设置ca证书过期时间为3650天，默认Dockerfile里写的是36500
 ```
 
 ### 生成客户端配置文件
@@ -104,14 +105,14 @@ if [ $# -ne 1 ];then
 	echo "usage : $0  username"
 	exit
 fi
-#'OGzgI45=yursB#2D+M3fRb%8Q4rh6+'
-pass=`tr -dc '_A-Z#\-+=a-z(0-9%^)]{' </dev/urandom | head -c 15`
-capass='KRXtlZNxXpuOvQ'
+
 docker-compose run --rm  openvpn easyrsa build-client-full $1 nopass
 #docker-compose run --rm  openvpn easyrsa build-client-full $1
 docker-compose run --rm openvpn ovpn_getclient $1 > ./client/$1.ovpn
+# 因为我这边外网映射的端口是28019，所以有一下修改，如果映射的是1194就不需要下面这个修改了
 sed -i 's/1194/28039/g' ./client/$1.ovpn
 
+# 可以根据情况选择是否要一下设置，默认情况下，所有流量走要走openvpn，我的需求是指定的ip段走openvpn。
 # 不添加默认路由，指定ip段使用vpn转发
 sed -i 's@redirect-gateway def1@#redirect-gateway def1@g' ./client/$1.ovpn
 sed -i '8i\route 192.168.0.0  255.255.224.0  vpn_gateway'  ./client/$1.ovpn
