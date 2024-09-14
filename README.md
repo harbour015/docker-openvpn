@@ -25,8 +25,8 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 * 初始化将保存配置文件的`$OVPN_DATA`容器和证书。容器将提示输入密码短语来保护新生成的证书颁发机构使用的私钥。
 
       docker volume create --name $OVPN_DATA
-      docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM
-      docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
+      docker run -v $OVPN_DATA:/etc/openvpn --rm vip8/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM
+      docker run -v $OVPN_DATA:/etc/openvpn --rm -it vip8/openvpn ovpn_initpki
 
 * 启动OpenVPN服务进程
 
@@ -35,13 +35,13 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 * 生成不带密码的客户端证书
 
   ```shell
-  docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full CLIENTNAME nopass
+  docker run -v $OVPN_DATA:/etc/openvpn --rm -it vip8/openvpn easyrsa build-client-full CLIENTNAME nopass
   # nopass 去掉这个参数，生成时提示输入密码
   ```
 
 * 生成客户端证书和配置文件
 
-      docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
+      docker run -v $OVPN_DATA:/etc/openvpn --rm vip8/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
 
 ## docker-compose安装
 
@@ -66,6 +66,8 @@ services:
      restart: always
      privileged: true
 ```
+>生成了docker-compose文件，先不启动
+
 
 ### 生成配置文件
 
@@ -73,6 +75,7 @@ services:
 docker-compose run --rm openvpn ovpn_genconfig -u udp://1.12.18.89
 # 1.12.18.89为公网的ip地址
 ```
+
 
 ### 生成密钥文件
 
@@ -115,7 +118,10 @@ sed -i 's@redirect-gateway def1@#redirect-gateway def1@g' ./client/$1.ovpn
 sed -i '8i\route 192.168.0.0  255.255.224.0  vpn_gateway'  ./client/$1.ovpn
 sed -i '8i\route 1.1.0.0  255.255.224.0  vpn_gateway'  ./client/$1.ovpn
 ```
-
+启动
+```shell
+docker-compose up -d
+```
 
 
 
@@ -161,7 +167,7 @@ If you prefer to use `docker-compose` please refer to the [documentation](docs/d
 
 ## How Does It Work?
 
-Initialize the volume container using the `kylemanna/openvpn` image with the
+Initialize the volume container using the `vip8/openvpn` image with the
 included scripts to automatically generate:
 
 - Diffie-Hellman parameters
@@ -177,11 +183,11 @@ declares that directory as a volume. It means that you can start another
 container with the `-v` argument, and access the configuration.
 The volume also holds the PKI keys and certs so that it could be backed up.
 
-To generate a client certificate, `kylemanna/openvpn` uses EasyRSA via the
+To generate a client certificate, `vip8/openvpn` uses EasyRSA via the
 `easyrsa` command in the container's path.  The `EASYRSA_*` environmental
 variables place the PKI CA under `/etc/openvpn/pki`.
 
-Conveniently, `kylemanna/openvpn` comes with a script called `ovpn_getclient`,
+Conveniently, `vip8/openvpn` comes with a script called `ovpn_getclient`,
 which dumps an inline OpenVPN client configuration file.  This single file can
 then be given to a client for access to the VPN.
 
@@ -247,7 +253,7 @@ OpenVPN with latest OpenSSL on Ubuntu 12.04 LTS).
 ### It Doesn't Stomp All Over the Server's Filesystem
 
 Everything for the Docker container is contained in two images: the ephemeral
-run time image (kylemanna/openvpn) and the `$OVPN_DATA` data volume. To remove
+run time image (vip8/openvpn) and the `$OVPN_DATA` data volume. To remove
 it, remove the corresponding containers, `$OVPN_DATA` data volume and Docker
 image and it's completely removed.  This also makes it easier to run multiple
 servers since each lives in the bubble of the container (of course multiple IPs
