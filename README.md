@@ -13,8 +13,8 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 
 #### Upstream Links
 
-* Docker Registry @ [kylemanna/openvpn](https://hub.docker.com/r/vip8/openvpn)
-* GitHub @ [kylemanna/docker-openvpn](https://github.com/vip8/docker-openvpn)
+* Docker Registry @ [vip8/openvpn](https://hub.docker.com/r/vip8/openvpn)
+* GitHub @ [harbour016/docker-openvpn](https://github.com/harbour016/docker-openvpn)
 
 ## Quick Start
 
@@ -34,10 +34,10 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 
 * 生成不带密码的客户端证书
 
-  ```shell
-  docker run -v $OVPN_DATA:/etc/openvpn --rm -it vip8/openvpn easyrsa build-client-full CLIENTNAME nopass
-  # nopass 去掉这个参数，生成时提示输入密码
-  ```
+
+      docker run -v $OVPN_DATA:/etc/openvpn --rm -it vip8/openvpn easyrsa build-client-full CLIENTNAME nopass
+      > nopass 去掉这个参数，生成时提示输入密码
+
 
 * 生成客户端证书和配置文件
 
