@@ -1,9 +1,9 @@
 # Original credit: https://github.com/jpetazzo/dockvpn
 
 # Smallest base image
-FROM aarch64/alpine:3.5
+FROM aarch64/alpine:latest
 
-LABEL maintainer="Kyle Manna <kyle@kylemanna.com>"
+LABEL maintainer="Li qinghai <61864003@qq.com>"
 
 RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
     echo "http://dl-4.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
@@ -17,7 +17,7 @@ ENV EASYRSA /usr/share/easy-rsa
 ENV EASYRSA_PKI $OPENVPN/pki
 
 # Prevents refused client connection because of an expired CRL
-ENV EASYRSA_CRL_DAYS 3650
+ENV EASYRSA_CRL_DAYS 36500
 
 VOLUME ["/etc/openvpn"]
 
