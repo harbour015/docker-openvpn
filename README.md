@@ -201,8 +201,11 @@ We use `tun` mode, because it works on the widest range of devices.
 `tap` mode, for instance, does not work on Android, except if the device
 is rooted.
 
-The topology used is `net30`, because it works on the widest range of OS.
+The topology used is `subnet`, because it works on the widest range of OS.
 `p2p`, for instance, does not work on Windows.
+```text
+WARNING: --topology net30 support for server configs with IPv4 pools will be removed in a future release. Please migrate to --topology subnet as soon as possible.
+```
 
 The UDP server uses`192.168.255.0/24` for dynamic clients by default.
 
