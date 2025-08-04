@@ -14,7 +14,7 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 #### Upstream Links
 
 * Docker Registry @ [vip8/openvpn](https://hub.docker.com/r/vip8/openvpn)
-* GitHub @ [harbour016/docker-openvpn](https://github.com/harbour016/docker-openvpn)
+* GitHub @ [harbour015/docker-openvpn](https://github.com/harbour015/docker-openvpn)
 
 ## Quick Start
 
