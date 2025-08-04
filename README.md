@@ -1,20 +1,6 @@
 # OpenVPN for Docker
 
-[![Build Status](images/openvpn-github-Readme/docker-openvpn.svg)](https://travis-ci.org/kylemanna/docker-openvpn)
-[![Docker Stars](images/openvpn-github-Readme/openvpn.svg+xml)](https://hub.docker.com/r/kylemanna/openvpn/)
-[![Docker Pulls](images/openvpn-github-Readme/openvpn-1684038252898-1.svg+xml)](https://hub.docker.com/r/kylemanna/openvpn/)
-[![ImageLayers](https://images.microbadger.com/badges/image/kylemanna/openvpn.svg)](https://microbadger.com/#/images/kylemanna/openvpn)
-[![FOSSA Status](images/openvpn-github-Readme/git%2Bgithub.com%2Fkylemanna%2Fdocker-openvpn.svg+xml)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkylemanna%2Fdocker-openvpn?ref=badge_shield)
-
 Docker容器中的OpenVPN服务器，并配有EasyRSA PKI CA。
-
-Extensively tested on [Digital Ocean $5/mo node](http://bit.ly/1C7cKr3) and has
-a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
-
-#### Upstream Links
-
-* Docker Registry @ [vip8/openvpn](https://hub.docker.com/r/vip8/openvpn)
-* GitHub @ [harbour015/docker-openvpn](https://github.com/harbour015/docker-openvpn)
 
 ## Quick Start
 
