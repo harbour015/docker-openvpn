@@ -48,12 +48,14 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 ### 准备docker-compose文件
 
 ```shell
-cd /opt/openvpn
-cat docker-compose.yaml
 services:
    openvpn:
      container_name: openvpn
-     image: vip8/openvpn
+     image: vip8/openvpn:latest
+     sysctls:
+       - net.ipv6.conf.all.disable_ipv6=0
+       - net.ipv6.conf.default.forwarding=1
+       - net.ipv6.conf.all.forwarding=1
      environment:
        TZ: Asia/Shanghai
      volumes:
