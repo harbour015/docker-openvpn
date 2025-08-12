@@ -59,7 +59,7 @@ services:
 ### 生成配置文件
 
 ```shell
-docker-compose run --rm openvpn ovpn_genconfig -u udp://1.12.18.89
+docker compose run --rm openvpn ovpn_genconfig -u udp://1.12.18.89
 # 1.12.18.89为公网的ip地址
 ```
 
@@ -67,21 +67,21 @@ docker-compose run --rm openvpn ovpn_genconfig -u udp://1.12.18.89
 ### 生成密钥文件
 
 ```shell
-docker-compose run -e  EASYRSA_CRL_DAYS=3650 --rm openvpn ovpn_initpki
+docker compose run -e  EASYRSA_CRL_DAYS=3650 --rm openvpn ovpn_initpki
 # EASYRSA_CRL_DAYS=3650 设置ca证书过期时间为3650天，默认Dockerfile里写的是36500
 ```
 
 ### 生成客户端配置文件
 
 ```shell
-docker-compose run --rm openvpn easyrsa build-client-full client_name nopass
+docker compose run --rm openvpn easyrsa build-client-full client_name nopass
 # nopass 添加此参数表示客户端证书不使用密码保护
 ```
 
 ### 导出客户端证书
 
 ```shell
-docker-compose run --rm openvpn ovpn_getclient client_name > ./client/client_name.ovpn
+docker compose run --rm openvpn ovpn_getclient client_name > ./client/client_name.ovpn
 # 默认情况下，没有client文件夹，需要手动创建
 ```
 
@@ -94,9 +94,9 @@ if [ $# -ne 1 ];then
 	exit
 fi
 
-docker-compose run --rm  openvpn easyrsa build-client-full $1 nopass
-#docker-compose run --rm  openvpn easyrsa build-client-full $1
-docker-compose run --rm openvpn ovpn_getclient $1 > ./client/$1.ovpn
+docker compose run --rm  openvpn easyrsa build-client-full $1 nopass
+#docker compose run --rm  openvpn easyrsa build-client-full $1
+docker compose run --rm openvpn ovpn_getclient $1 > ./client/$1.ovpn
 # 因为我这边外网映射的端口是28019，所以有一下修改，如果映射的是1194就不需要下面这个修改了
 sed -i 's/1194/28039/g' ./client/$1.ovpn
 
@@ -108,7 +108,7 @@ sed -i '8i\route 1.1.0.0  255.255.224.0  vpn_gateway'  ./client/$1.ovpn
 ```
 启动
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
 
 
