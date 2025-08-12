@@ -8,7 +8,7 @@ fi
 docker compose run --rm  openvpn easyrsa build-client-full $1 nopass
 # docker compose run --rm  openvpn easyrsa build-client-full $1
 docker compose run --rm openvpn ovpn_getclient $1 > ./client/$1.ovpn
-sed -i 's/1194/28539/g' ./client/$1.ovpn
+sed -i 's/1194/28039/g' ./client/$1.ovpn
 
 
 # 下面的选项，按照自己的需求启用
